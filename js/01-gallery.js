@@ -1,5 +1,4 @@
 import { galleryItems } from "./gallery-items.js";
-import * as basicLightbox from "basiclightbox";
 // Change code below this line
 
 const gallery = document.querySelector(".gallery");
@@ -38,11 +37,29 @@ function onClickItemGallery(evn) {
   modalShow(imgClick);
 }
 
+let instance;
+
 function modalShow(a) {
-  console.log(a);
-  const instance = basicLightbox.create(`
+  instance = basicLightbox.create(
+    `
     <img src="${a}" width="800" height="600">
-`);
+`,
+    {
+      onShow: (instance) => {
+        document.addEventListener("keydown", onEscModalClose);
+      },
+      onClose: (instance) => {
+        document.addEventListener("keydown", onEscModalClose);
+      },
+    }
+  );
 
   instance.show();
+}
+
+function onEscModalClose(e) {
+  e.preventDefault();
+  if (e.key === "Escape") {
+    instance.close();
+  }
 }
