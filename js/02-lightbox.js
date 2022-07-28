@@ -6,12 +6,10 @@ const galleryItemsMurkup = galleryMarkup(galleryItems);
 
 gallery.insertAdjacentHTML("beforeend", galleryItemsMurkup);
 
-gallery.addEventListener("click", onClickItemGallery);
-
 function galleryMarkup(galleryItems) {
   return galleryItems
     .map(({ original, preview, description }) => {
-      return `<div class="gallery__item">
+      return `<li class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
@@ -20,27 +18,16 @@ function galleryMarkup(galleryItems) {
       alt="${description}"
     />
   </a>
-</div>`;
+</li>`;
     })
     .join("");
 }
 
-function onClickItemGallery(evn) {
-  evn.preventDefault();
-
-  const isLink = evn.target.classList.contains("gallery__image");
-  if (!isLink) {
-    return;
-  }
-
-  var lightbox = new SimpleLightbox(".gallery a", {
-    captions: true,
-    captionType: "attr",
-    captionPosition: "bottom",
-    captionDelay: 250,
-    captionsData: "alt",
-    docClose: true,
-  });
-
-  lightbox.on("show.simplelightbox");
-}
+var lightbox = new SimpleLightbox(".gallery a", {
+  captions: true,
+  captionType: "attr",
+  captionPosition: "bottom",
+  captionDelay: 250,
+  captionsData: "alt",
+  docClose: true,
+});
